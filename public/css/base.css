@@ -44,6 +44,8 @@ a {
 
 
 .puissance_4{
+
+	
 	float: left;
 	width:60%;
 	z-index: 1;
@@ -209,4 +211,29 @@ a {
 	.chat-sidebar {
 		display: none;
 	}
+}
+
+
+
+
+#game_area table {
+    border: 3px blue outset;
+    background-color: blue;
+}
+#game_area td {
+    width: 2cm;
+    height: 2cm;
+    margin: 0px;
+    padding: 0px;
+    border: 2px black inset;
+    border-radius: 2cm;
+    background-color: rgb(0,10,10);
+
+    cursor: pointer;
+}
+#game_area td.player1 {
+    background-color: grey;
+}
+#game_area td.player2 {
+    background-color: white;
 }

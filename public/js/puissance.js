@@ -181,20 +181,20 @@ class Puissance4 {
   }
 }
 
-
+/*
 
 var game = document.getElementById('jouer');    // On récupère l'élément sur lequel on veut détecter le clic
 game.addEventListener('click', function(event) {        // On écoute l'événement click
 event.preventDefault();  
-
+*/
 
 // On initialise le plateau et on visualise dans le DOM
 // (dans la balise d'identifiant `game`).
-let p4 = new Puissance4('#game');
+let p4 = new Puissance4('#game_area');
 
 
 
-
+/*
 var newGame=document.createElement("button");                                               
 game.style.display="none";
 newGame.innerHTML ="<button type='submit' class='button' >Rejouer!</button>";
@@ -215,3 +215,4 @@ eventbis.stopPropagation();
 
 }
 )
+*/
