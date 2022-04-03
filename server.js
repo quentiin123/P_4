@@ -1,6 +1,14 @@
 const path = require('path');
 const http = require('http');
 const express = require('express');
+
+
+
+
+
+
+
+
 const socketio = require('socket.io');
 const formatMessage = require('./utils/messages');
 const {
@@ -21,10 +29,16 @@ const botName = 'Puissance 4 Chat';
 
 // Run when client connects
 io.on('connection', socket => {
-  socket.on('joinRoom', ({ username, room }) => {
+
+
+
+  socket.on('joinRoom', ({ username, room }) => {  //évt joinRoom, qui va donc donner les info de la room pour un joueur
+
     const user = userJoin(socket.id, username, room);
 
     socket.join(user.room);
+    
+
 
     // Welcome current user
     socket.emit('message', formatMessage(botName, 'Bienvenue sur Puissance 4'));
@@ -41,7 +55,12 @@ io.on('connection', socket => {
     io.to(user.room).emit('roomUsers', {
       room: user.room,
       users: getRoomUsers(user.room)
+
+
+
+
     });
+
   });
 
   // Listen for chatMessage
@@ -68,6 +87,18 @@ io.on('connection', socket => {
       });
     }
   });
+
+
+//On va gérer le jeu à partir d'en dessous:
+
+socket.on('playerData',(player)=>{
+
+  console.log(player.username);
+});
+
+
+
+
 });
 
 const PORT = process.env.PORT || 8080;

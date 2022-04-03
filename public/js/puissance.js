@@ -39,6 +39,8 @@ class Puissance4 {
   
 
 
+
+
   /* Affiche le plateau de jeu dans le DOM */
   render() {
     let table = document.createElement('table');
@@ -47,11 +49,20 @@ class Puissance4 {
       let tr = table.appendChild(document.createElement('tr'));
       for (let j = 0; j < this.colonne; j++) {
         let td = tr.appendChild(document.createElement('td'));
+
+
+
         let colour = this.plateau[i][j];
         if (colour)
           td.className = 'player' + colour;
+
+
+        //ligne à changer
         td.dataset.la_colonne = j;
+
+
       }
+
     }
     this.element.innerHTML = '';
     this.element.appendChild(table);
