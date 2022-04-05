@@ -78,13 +78,14 @@ io.on('connection', socket => {
       io.to(user.room).emit(
         'message',
         formatMessage(botName, `${user.username} a quitté la partie`)
-      );
+      );    
 
       // Send users and room info
       io.to(user.room).emit('roomUsers', {
         room: user.room,
         users: getRoomUsers(user.room)
       });
+    socket.to(user.room).emit("reset");
     }
   });
 
@@ -96,8 +97,21 @@ socket.on('playerData',(player)=>{
   console.log(player.username);
 });
 
+socket.on("reset",()=>{
 
+  const user = getCurrentUser(socket.id);
+    //console.log("colonne: "+colonne+" ligne: "+ligne);
+  
+    socket.to(user.room).emit("reset");
 
+})
+socket.on('Coup ennemi Joué',({colonne, ligne,room})=>{
+
+    const user = getCurrentUser(socket.id);
+    //console.log("colonne: "+colonne+" ligne: "+ligne);
+  
+    socket.to(user.room).emit('Coup ennemi Reçu',{colonne: colonne,ligne : ligne}); //on utilise socket.to.emit pour que l'autre joueur uniquement reçoive l'évt;
+});
 
 });
 
