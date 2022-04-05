@@ -23,7 +23,7 @@ const player = {
 
 
 
-// Get username and room from URL
+// On récupère le pseudo et la salle à partir de l'URL 
 const { username, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true,
 });
@@ -62,7 +62,7 @@ socket.emit('joinRoom', { username, room });
 
 
 
-// Get room and users
+// On récupère les pseudo et salle 
 socket.on('roomUsers', ({ room, users }) => {
   outputRoomName(room);
   outputUsers(users);
@@ -103,7 +103,7 @@ socket.on('roomUsers', ({ room, users }) => {
 
 
 
-// Message from server
+// Message du serveur 
 socket.on('message', (message) => {
   console.log(message);
   outputMessage(message);
@@ -114,11 +114,11 @@ socket.on('message', (message) => {
 
 
 
-// Message submit
+
 chatForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
-  // Get message text
+  // On récupère le texte du message 
   let msg = e.target.elements.msg.value;
 
   msg = msg.trim();
@@ -127,15 +127,15 @@ chatForm.addEventListener('submit', (e) => {
     return false;
   }
 
-  // Emit message to server
+  // Envoie du message au serveur 
   socket.emit('chatMessage', msg);
 
-  // Clear input
+
   e.target.elements.msg.value = '';
   e.target.elements.msg.focus();
 });
 
-// Output message to DOM
+// Affichage du message sur le DOM 
 function outputMessage(message) {
   const div = document.createElement('div');
   div.classList.add('message');
@@ -151,12 +151,12 @@ function outputMessage(message) {
   document.querySelector('.chat-messages').appendChild(div);
 }
 
-// Add room name to DOM
+// Ajout de la salle sur le DOM 
 function outputRoomName(room) {
   roomName.innerText = room;
 }
 
-// Add users to DOM
+// Ajout des joueurs sur le DOM
 function outputUsers(users) {
   userList.innerHTML = '';
   users.forEach((user) => {
@@ -166,7 +166,7 @@ function outputUsers(users) {
   });
 }
 
-//Prompt the user before leave chat room
+//Prévient l'utilisateur de la sortie de la room 
 document.getElementById('leave-btn').addEventListener('click', () => {
   const leaveRoom = confirm('Voulez-vous quitter la salle de jeu?');
   if (leaveRoom) {
