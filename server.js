@@ -22,12 +22,12 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
-// Set static folder
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 const botName = 'Puissance 4 Chat';
 
-// Run when client connects
+// On démarre le chat dès qu'un client se connecte
 io.on('connection', socket => {
 
 
@@ -40,10 +40,10 @@ io.on('connection', socket => {
     
 
 
-    // Welcome current user
+    // Message de Bienvenue 
     socket.emit('message', formatMessage(botName, 'Bienvenue sur Puissance 4'));
 
-    // Broadcast when a user connects
+    // Message quand un utilisateur se connecte 
     socket.broadcast
       .to(user.room)
       .emit(
@@ -51,7 +51,7 @@ io.on('connection', socket => {
         formatMessage(botName, `${user.username} a rejoint la partie`)
       );
 
-    // Send users and room info
+    // On envoie les infos de la room et du user 
     io.to(user.room).emit('roomUsers', {
       room: user.room,
       users: getRoomUsers(user.room)
@@ -63,14 +63,14 @@ io.on('connection', socket => {
 
   });
 
-  // Listen for chatMessage
+  // On récupère les messages côté serveur 
   socket.on('chatMessage', msg => {
     const user = getCurrentUser(socket.id);
 
     io.to(user.room).emit('message', formatMessage(user.username, msg));
   });
 
-  // Runs when client disconnects
+  // Evennement de déconnexion d'un utilisateur
   socket.on('disconnect', () => {
     const user = userLeave(socket.id);
 
@@ -80,7 +80,7 @@ io.on('connection', socket => {
         formatMessage(botName, `${user.username} a quitté la partie`)
       );    
 
-      // Send users and room info
+      // Envoie des infos update de la room 
       io.to(user.room).emit('roomUsers', {
         room: user.room,
         users: getRoomUsers(user.room)
